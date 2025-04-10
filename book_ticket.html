@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Book Ticket - Airline Management</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/book_ticket.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>Book a Ticket</h1>
+        <div class="flash-messages">
+            {% for message in get_flashed_messages() %}
+                <p class="{{ 'success' if 'success' in message else '' }}">{{ message }}</p>
+            {% endfor %}
+        </div>
+        <form method="POST">
+            <label>Name: <input type="text" name="name" required></label>
+            <label>Flight: <select name="flight_id" required>
+                {% for flight in flights %}
+                    <option value="{{ flight[0] }}">{{ flight[0] }}: {{ flight[1] }} to {{ flight[2] }} on {{ flight[3] }}</option>
+                {% endfor %}
+            </select></label>
+            <input type="submit" value="Book">
+        </form>
+        <a href="/user">View Tickets</a> | <a href="/logout">Logout</a>
+    </div>
+</body>
+</html>

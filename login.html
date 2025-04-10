@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Login - Airline Management</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/login.css') }}">
+</head>
+<body>
+    <div class="login-container">
+        <h1>Login</h1>
+        <div class="flash-messages">
+            {% for message in get_flashed_messages() %}
+                <p class="{{ 'success' if 'success' in message else '' }}">{{ message }}</p>
+            {% endfor %}
+        </div>
+        <form method="POST" action="/login">
+            <label>Username: <input type="text" name="username" required></label>
+            <label>Password: <input type="password" name="password" required></label>
+            <input type="submit" value="Login">
+        </form>
+    </div>
+</body>
+</html>

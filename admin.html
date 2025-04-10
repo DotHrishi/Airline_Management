@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Admin Dashboard - Airline Management</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/admin.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>Admin Dashboard</h1>
+        <div class="flash-messages">
+            {% for message in get_flashed_messages() %}
+                <p class="{{ 'success' if 'success' in message else '' }}">{{ message }}</p>
+            {% endfor %}
+        </div>
+        <h2>Add Flight</h2>
+        <form method="POST" action="/add_flight">
+            <label>Flight ID: <input type="text" name="flight_id" required></label>
+            <label>Date: <input type="date" name="scheduled_date" required></label>
+            <label>Source: <input type="text" name="source" required></label>
+            <label>Destination: <input type="text" name="destination" required></label>
+            <label>Departure: <input type="time" name="departure_time"></label>
+            <label>Arrival: <input type="time" name="arrival_time"></label>
+            <label>Capacity: <input type="number" name="capacity"></label>
+            <label>Plane Type: <input type="text" name="plane_type"></label>
+            <label>Crew Count: <input type="number" name="crew_count"></label>
+            <input type="submit" value="Add Flight">
+        </form>
+        <h2>Flights</h2>
+        <table>
+            <tr><th>Flight ID</th><th>Date</th><th>Source</th><th>Destination</th><th>Status</th><th>Action</th></tr>
+            {% for flight in flights %}
+                <tr><td>{{ flight[0] }}</td><td>{{ flight[1] }}</td><td>{{ flight[2] }}</td><td>{{ flight[3] }}</td><td>{{ flight[6] }}</td><td><a href="/delete_flight/{{ flight[0] }}">Delete</a></td></tr>
+            {% endfor %}
+        </table>
+        <h2>Add Employee</h2>
+        <form method="POST" action="/add_employee">
+            <label>Emp ID: <input type="text" name="emp_id" required></label>
+            <label>Name: <input type="text" name="name" required></label>
+            <label>Role: <select name="role" required>
+                <option value="Pilot">Pilot</option>
+                <option value="CoPilot">CoPilot</option>
+                <option value="AirHostess">AirHostess</option>
+                <option value="Marshall">Marshall</option>
+            </select></label>
+            <label>Email: <input type="email" name="email" required></label>
+            <label>Phone: <input type="text" name="phone_no" required></label>
+            <label>Salary: <input type="number" name="salary" step="0.01" required></label>
+            <input type="submit" value="Add Employee">
+        </form>
+        <h2>Employees</h2>
+        <table>
+            <tr><th>Emp ID</th><th>Name</th><th>Role</th><th>Email</th><th>Phone</th><th>Salary</th></tr>
+            {% for emp in employees %}
+                <tr><td>{{ emp[0] }}</td><td>{{ emp[1] }}</td><td>{{ emp[2] }}</td><td>{{ emp[3] }}</td><td>{{ emp[4] }}</td><td>{{ emp[5] }}</td></tr>
+            {% endfor %}
+        </table>
+        <h2>Assign Crew</h2>
+        <form method="POST" action="/assign_crew">
+            <label>Flight ID: <input type="text" name="flight_id" required></label>
+            <label>Emp ID: <input type="text" name="emp_id" required></label>
+            <label>Role: <select name="role" required>
+                <option value="Pilot">Pilot</option>
+                <option value="CoPilot">CoPilot</option>
+                <option value="AirHostess">AirHostess</option>
+                <option value="Marshall">Marshall</option>
+            </select></label>
+            <label>Shift Hours: <input type="number" name="shift_hours" value="8"></label>
+            <input type="submit" value="Assign Crew">
+        </form>
+        <h2>Flight Crew</h2>
+        <table>
+            <tr><th>Flight ID</th><th>Emp ID</th><th>Role</th><th>Shift Hours</th></tr>
+            {% for crew in flight_crew %}
+                <tr><td>{{ crew[0] }}</td><td>{{ crew[1] }}</td><td>{{ crew[2] }}</td><td>{{ crew[3] }}</td></tr>
+            {% endfor %}
+        </table>
+        <a href="/logout">Logout</a>
+    </div>
+</body>
+</html>

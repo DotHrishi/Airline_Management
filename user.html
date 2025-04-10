@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>User Dashboard - Airline Management</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/user.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>Welcome, {{ username }}!</h1>
+        <div class="flash-messages">
+            {% for message in get_flashed_messages() %}
+                <p class="{{ 'success' if 'success' in message else '' }}">{{ message }}</p>
+            {% endfor %}
+        </div>
+        <h2>Your Tickets</h2>
+        <table>
+            <tr><th>Ticket ID</th><th>PNR</th><th>Flight ID</th><th>Seat</th><th>Date</th><th>Class</th><th>Price</th></tr>
+            {% for ticket in tickets %}
+                <tr><td>{{ ticket[0] }}</td><td>{{ ticket[1] }}</td><td>{{ ticket[2] }}</td><td>{{ ticket[3] }}</td><td>{{ ticket[4] }}</td><td>{{ ticket[5] }}</td><td>{{ ticket[6] }}</td></tr>
+            {% endfor %}
+        </table>
+        <h2>Flight Status Dashboard</h2>
+        <table>
+            <tr><th>Flight ID</th><th>Source</th><th>Destination</th><th>Date</th><th>Status</th></tr>
+            {% for flight in flight_status %}
+                <tr><td>{{ flight[0] }}</td><td>{{ flight[1] }}</td><td>{{ flight[2] }}</td><td>{{ flight[3] }}</td><td>{{ flight[4] }}</td></tr>
+            {% endfor %}
+        </table>
+        <a href="/book_ticket">Book Ticket</a> | <a href="/logout">Logout</a>
+    </div>
+</body>
+</html>
